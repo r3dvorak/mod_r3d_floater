@@ -2,7 +2,7 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/js/floater.js
- * @version     5.3.0
+ * @version     5.3.1
  * @description Controls opening, closing, animation and positioning of the floater
  */
 
@@ -25,9 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
   floater.style.width = width + "px";
   floater.style.height = height + "px";
 
-  // Apply custom animation start values
+  // Apply custom animation values
   floater.style.setProperty("--r3d-rotate", rotateStart + "deg");
   floater.style.setProperty("--r3d-scale", scaleStart);
+  floater.style.setProperty("--r3d-rotate-target", "0deg");
+  floater.style.setProperty("--r3d-scale-target", "1");
+
+  // Apply transition speed dynamically
+  floater.style.setProperty("--r3d-speed", speedIn + "ms");
 
   // Add initial direction class
   floater.classList.add(`r3d-floater--from-${direction}`);
@@ -40,12 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Close Floater ===
   const closeFloater = () => {
+    // Switch transition speed for close
+    floater.style.setProperty("--r3d-speed", speedOut + "ms");
+
     floater.classList.remove("r3d-floater--visible");
     floater.classList.add("r3d-floater--closing");
     floater.setAttribute("aria-hidden", "true");
 
     setTimeout(() => {
       floater.classList.remove("r3d-floater--closing");
+      // Reset transition speed back to open
+      floater.style.setProperty("--r3d-speed", speedIn + "ms");
     }, speedOut);
   };
 
