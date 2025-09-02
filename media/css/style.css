@@ -2,11 +2,10 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/css/style.css
- * @version     5.2.3
- * @description Basis-Styles und Animationen für den Floater
+ * @version     5.2.4
+ * @description Floater animations with center-first positioning
  */
 
-/* === Floater Base === */
 .r3d-floater {
   position: fixed;
   top: 50%;
@@ -14,54 +13,51 @@
   z-index: 2147483647;
   opacity: 0;
   pointer-events: none;
-  transition: transform 0.8s ease-in-out, opacity 0.6s ease-in-out;
+
+  --r3d-rotate: -90deg;
+  --r3d-scale: 0.3;
 }
 
-/* Centered visible state */
+/* Final state = perfectly centered */
 .r3d-floater--visible {
-  transform: translate(-50%, -50%) !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* === Directional hidden states === */
-/* If rotation disabled, just translate */
-.r3d-floater--no-rotate.r3d-floater--from-top {
-  transform: translate(-50%, -150vh);
+/* Hidden states = centered, then pushed out of view */
+.r3d-floater--from-top {
+  transform: translate(-50%, -100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
-.r3d-floater--no-rotate.r3d-floater--from-bottom {
-  transform: translate(-50%, 150vh);
+.r3d-floater--from-bottom {
+  transform: translate(-50%, 100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
-.r3d-floater--no-rotate.r3d-floater--from-left {
-  transform: translate(-150%, -50%);
+.r3d-floater--from-left {
+  transform: translate(-100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
-.r3d-floater--no-rotate.r3d-floater--from-right {
-  transform: translate(150%, -50%);
-}
-/* Visible (no rotation) */
-.r3d-floater--no-rotate.r3d-floater--visible {
-  transform: translate(-50%, -50%) scale(1);
+.r3d-floater--from-right {
+  transform: translate(100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
 
-/* === Closing states === */
+/* Closing states = back to hidden position */
 .r3d-floater--closing.r3d-floater--from-top {
-  transform: translate(-50%, -150%) !important;
-  opacity: 0 !important;
+  transform: translate(-50%, -100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+  opacity: 0;
 }
 .r3d-floater--closing.r3d-floater--from-bottom {
-  transform: translate(-50%, 150%) !important;
-  opacity: 0 !important;
+  transform: translate(-50%, 100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+  opacity: 0;
 }
 .r3d-floater--closing.r3d-floater--from-left {
-  transform: translate(-150%, -50%) !important;
-  opacity: 0 !important;
+  transform: translate(-100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+  opacity: 0;
 }
 .r3d-floater--closing.r3d-floater--from-right {
-  transform: translate(150%, -50%) !important;
-  opacity: 0 !important;
+  transform: translate(100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+  opacity: 0;
 }
 
-/* === Panel Container === */
+/* Panel */
 .r3d-floater__panel {
   background: #fff;
   border: 1px solid #ccc;
@@ -73,14 +69,14 @@
   flex-direction: column;
 }
 
-/* Content Area */
+/* Content */
 .r3d-floater__content {
   padding: 1rem;
   overflow-y: auto;
   max-height: 100%;
 }
 
-/* Close Button */
+/* Close button */
 .r3d-floater__close {
   position: absolute;
   top: 6px;
@@ -97,7 +93,7 @@
   color: #000;
 }
 
-/* Default Fallback (Logo) */
+/* Default fallback */
 .r3d-floater-default {
   display: flex;
   align-items: center;
