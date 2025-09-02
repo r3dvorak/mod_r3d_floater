@@ -1,0 +1,22 @@
+{
+  "name": "mod_r3d_floater",
+  "type": "module",
+  "version": "5.0.0",
+  "assets": {
+    "script": {
+      "mod_r3d_floater.floater": {
+        "js": [
+          "media/mod_r3d_floater/js/floater.js"
+        ],
+        "attributes": { "defer": true }
+      }
+    },
+    "style": {
+      "mod_r3d_floater.style": {
+        "css": [
+          "media/mod_r3d_floater/css/style.css"
+        ]
+      }
+    }
+  }
+}

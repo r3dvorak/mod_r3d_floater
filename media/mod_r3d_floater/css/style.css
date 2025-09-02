@@ -1,0 +1,115 @@
+/**
+ * @package     Joomla.Module
+ * @subpackage  mod_r3d_floater
+ * @creation    2025-09-02
+ * @author      Richard Dvorak, r3d.de
+ * @license     GNU GPL v3 or later
+ * @version     5.0.0
+ * @file        modules/mod_r3d_floater/media/mod_r3d_floater/css/style.css
+ */
+
+.r3d-floater {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.r3d-floater__panel {
+    pointer-events: auto;
+    background: #fff;
+    color: #111;
+    border-radius: 14px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .3);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+}
+
+.r3d-floater--hidden {
+    display: none;
+}
+
+.r3d-floater__close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 26px;
+    line-height: 1;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.r3d-floater__content {
+    padding: 16px;
+}
+
+/* slide-in keyframes */
+@keyframes r3d-slide-in-right {
+    from {
+        transform: translateX(60vw);
+        opacity: .01;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes r3d-slide-in-left {
+    from {
+        transform: translateX(-60vw);
+        opacity: .01;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes r3d-slide-in-top {
+    from {
+        transform: translateY(-60vh);
+        opacity: .01;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes r3d-slide-in-bottom {
+    from {
+        transform: translateY(60vh);
+        opacity: .01;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.r3d-anim-right {
+    animation: r3d-slide-in-right 420ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.r3d-anim-left {
+    animation: r3d-slide-in-left 420ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.r3d-anim-top {
+    animation: r3d-slide-in-top 420ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.r3d-anim-bottom {
+    animation: r3d-slide-in-bottom420ms cubic-bezier(.2, .8, .2, 1) both;
+}

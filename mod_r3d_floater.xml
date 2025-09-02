@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade" version="5.0">
+  <name>MOD_R3D_FLOATER</name>
+  <version>5.0.0</version>
+  <creationDate>2025-09-02</creationDate>
+  <author>Richard Dvorak, r3d.de</author>
+  <authorUrl>https://r3d.de</authorUrl>
+  <license>GPL-3.0-or-later</license>
+  <description>MOD_R3D_FLOATER_DESC</description>
+
+  <files>
+    <filename module="mod_r3d_floater">mod_r3d_floater.php</filename>
+    <filename>helper.php</filename>
+    <folder>tmpl</folder>
+    <folder>language</folder>
+    <folder>media</folder>
+
+    <!-- Explicit language files -->
+    <filename>language/en-GB/en-GB.mod_r3d_floater.ini</filename>
+    <filename>language/en-GB/en-GB.mod_r3d_floater.sys.ini</filename>
+    <filename>language/de-DE/de-DE.mod_r3d_floater.ini</filename>
+    <filename>language/de-DE/de-DE.mod_r3d_floater.sys.ini</filename>
+  </files>
+
+  <languages>
+    <language tag="en-GB">language/en-GB/en-GB.mod_r3d_floater.ini</language>
+    <language tag="en-GB">language/en-GB/en-GB.mod_r3d_floater.sys.ini</language>
+    <language tag="de-DE">language/de-DE/de-DE.mod_r3d_floater.ini</language>
+    <language tag="de-DE">language/de-DE/de-DE.mod_r3d_floater.sys.ini</language>
+  </languages>
+
+  <media folder="media" destination="mod_r3d_floater">
+    <folder>mod_r3d_floater</folder>
+  </media>
+
+  <config>
+    <fields name="params">
+      <fieldset name="basic" label="JFIELD_PARAMS_BASIC_LABEL">
+
+        <field name="content_source" type="list" default="custom"
+               label="MOD_R3D_FLOATER_FIELD_SOURCE" description="MOD_R3D_FLOATER_FIELD_SOURCE_DESC">
+          <option value="custom">MOD_R3D_FLOATER_OPTION_CUSTOM</option>
+          <option value="module">MOD_R3D_FLOATER_OPTION_MODULE</option>
+        </field>
+
+        <field name="custom_html" type="textarea" filter="raw" rows="10"
+               label="MOD_R3D_FLOATER_FIELD_HTML" description="MOD_R3D_FLOATER_FIELD_HTML_DESC" />
+
+        <field name="embed_module_id" type="sql"
+               label="MOD_R3D_FLOATER_FIELD_EMBED_ID" description="MOD_R3D_FLOATER_FIELD_EMBED_ID_DESC"
+               query="SELECT id AS value, CONCAT(title,' (',module,')') AS text FROM #__modules WHERE published=1 ORDER BY title"
+               key_field="value" value_field="text" />
+
+        <field name="direction" type="list" default="right"
+               label="MOD_R3D_FLOATER_FIELD_DIR" description="MOD_R3D_FLOATER_FIELD_DIR_DESC">
+          <option value="left">MOD_R3D_FLOATER_DIR_LEFT</option>
+          <option value="right">MOD_R3D_FLOATER_DIR_RIGHT</option>
+          <option value="top">MOD_R3D_FLOATER_DIR_TOP</option>
+          <option value="bottom">MOD_R3D_FLOATER_DIR_BOTTOM</option>
+        </field>
+
+        <field name="width" type="number" default="560" filter="integer"
+               label="MOD_R3D_FLOATER_FIELD_WIDTH" />
+        <field name="height" type="number" default="400" filter="integer"
+               label="MOD_R3D_FLOATER_FIELD_HEIGHT" />
+
+        <field name="auto_open" type="radio" default="1"
+               label="MOD_R3D_FLOATER_FIELD_AUTO" description="MOD_R3D_FLOATER_FIELD_AUTO_DESC">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+
+        <field name="show_close" type="radio" default="1"
+               label="MOD_R3D_FLOATER_FIELD_CLOSE" description="MOD_R3D_FLOATER_FIELD_CLOSE_DESC">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+
+        <field name="frequency" type="list" default="session"
+               label="MOD_R3D_FLOATER_FIELD_FREQ" description="MOD_R3D_FLOATER_FIELD_FREQ_DESC">
+          <option value="every">MOD_R3D_FLOATER_FREQ_EVERY</option>
+          <option value="session">MOD_R3D_FLOATER_FREQ_SESSION</option>
+          <option value="day">MOD_R3D_FLOATER_FREQ_DAY</option>
+          <option value="week">MOD_R3D_FLOATER_FREQ_WEEK</option>
+        </field>
+
+        <field name="cookie_prefix" type="text" default="r3dFloater"
+               label="MOD_R3D_FLOATER_FIELD_KEY" description="MOD_R3D_FLOATER_FIELD_KEY_DESC" />
+      </fieldset>
+    </fields>
+  </config>
+</extension>
