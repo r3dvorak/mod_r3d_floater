@@ -2,7 +2,7 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/js/floater.js
- * @version     5.3.1
+ * @version     5.3.2
  * @description Controls opening, closing, animation and positioning of the floater
  */
 
@@ -31,14 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
   floater.style.setProperty("--r3d-rotate-target", "0deg");
   floater.style.setProperty("--r3d-scale-target", "1");
 
-  // Apply transition speed dynamically
+  // Apply transition speed dynamically (for opening)
   floater.style.setProperty("--r3d-speed", speedIn + "ms");
 
-  // Add initial direction class
+  // Start hidden at directional position
   floater.classList.add(`r3d-floater--from-${direction}`);
 
   // === Open Floater ===
   const openFloater = () => {
+    // Remove "from-direction" so transition can animate
+    floater.classList.remove(`r3d-floater--from-${direction}`);
     floater.classList.add("r3d-floater--visible");
     floater.setAttribute("aria-hidden", "false");
   };
@@ -48,8 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Switch transition speed for close
     floater.style.setProperty("--r3d-speed", speedOut + "ms");
 
+    // Remove visible, reapply directional transform
     floater.classList.remove("r3d-floater--visible");
-    floater.classList.add("r3d-floater--closing");
+    floater.classList.add("r3d-floater--closing", `r3d-floater--from-${direction}`);
     floater.setAttribute("aria-hidden", "true");
 
     setTimeout(() => {
