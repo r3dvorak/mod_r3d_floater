@@ -2,7 +2,7 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/js/floater.js
- * @version     5.2.1
+ * @version     5.2.3
  * @description Floater controller (fixes direction consistency bug)
  */
 
@@ -37,6 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
     floater.classList.add("r3d-floater--visible");
     floater.setAttribute("aria-hidden", "false");
   };
+
+  const applyRotate = floater.dataset.applyRotate === "true";
+  if (!applyRotate) {
+    floater.classList.add("r3d-floater--no-rotate");
+  }
 
   // === Close Floater ===
   const closeFloater = () => {

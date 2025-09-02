@@ -2,7 +2,7 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/css/style.css
- * @version     5.2.2
+ * @version     5.2.3
  * @description Basis-Styles und Animationen für den Floater
  */
 
@@ -25,19 +25,22 @@
 }
 
 /* === Directional hidden states === */
-/* Fix top direction */
-.r3d-floater--from-top {
-  transform: translate(-50%, -150vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+/* If rotation disabled, just translate */
+.r3d-floater--no-rotate.r3d-floater--from-top {
+  transform: translate(-50%, -150vh);
 }
-
-.r3d-floater--from-bottom {
-  transform: translate(-50%, 150%);
+.r3d-floater--no-rotate.r3d-floater--from-bottom {
+  transform: translate(-50%, 150vh);
 }
-.r3d-floater--from-left {
+.r3d-floater--no-rotate.r3d-floater--from-left {
   transform: translate(-150%, -50%);
 }
-.r3d-floater--from-right {
+.r3d-floater--no-rotate.r3d-floater--from-right {
   transform: translate(150%, -50%);
+}
+/* Visible (no rotation) */
+.r3d-floater--no-rotate.r3d-floater--visible {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* === Closing states === */
