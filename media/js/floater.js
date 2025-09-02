@@ -2,7 +2,7 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/js/floater.js
- * @version     5.2.0
+ * @version     5.3.0
  * @description Controls opening, closing, animation and positioning of the floater
  */
 
@@ -17,13 +17,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const zIndex = parseInt(floater.dataset.zindex || "2147483647", 10);
   const width = parseInt(floater.dataset.width || "560", 10);
   const height = parseInt(floater.dataset.height || "400", 10);
+  const rotateStart = parseInt(floater.dataset.rotateStart || "-90", 10);
+  const scaleStart = parseInt(floater.dataset.scaleStart || "30", 10) / 100;
 
-  // Apply z-index directly
+  // Apply z-index and dimensions
   floater.style.zIndex = zIndex;
-
-  // Apply dimensions if not already inline
   floater.style.width = width + "px";
   floater.style.height = height + "px";
+
+  // Apply custom animation start values
+  floater.style.setProperty("--r3d-rotate", rotateStart + "deg");
+  floater.style.setProperty("--r3d-scale", scaleStart);
 
   // Add initial direction class
   floater.classList.add(`r3d-floater--from-${direction}`);
@@ -40,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
     floater.classList.add("r3d-floater--closing");
     floater.setAttribute("aria-hidden", "true");
 
-    // Reset after animation
     setTimeout(() => {
       floater.classList.remove("r3d-floater--closing");
     }, speedOut);

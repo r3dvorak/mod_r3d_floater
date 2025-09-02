@@ -2,11 +2,10 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/css/style.css
- * @version     5.2.0
+ * @version     5.3.0
  * @description Basis-Styles und Animationen für den Floater
  */
 
-/* === Floater Base === */
 .r3d-floater {
   position: fixed;
   top: 50%;
@@ -15,48 +14,50 @@
   opacity: 0;
   pointer-events: none;
   transition: transform 0.8s ease-in-out, opacity 0.6s ease-in-out;
+  --r3d-rotate: -90deg; /* default rotation */
+  --r3d-scale: 0.3;     /* default scale (30%) */
 }
 
 /* Centered visible state */
 .r3d-floater--visible {
-  transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1) !important;
   opacity: 1 !important;
   pointer-events: auto !important;
 }
 
-/* === Directional hidden states === */
+/* Directional hidden states */
 .r3d-floater--from-top {
-  transform: translate(-50%, -150%);
+  transform: translate(-50%, -150%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
 .r3d-floater--from-bottom {
-  transform: translate(-50%, 150%);
+  transform: translate(-50%, 150%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
 .r3d-floater--from-left {
-  transform: translate(-150%, -50%);
+  transform: translate(-150%, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
 .r3d-floater--from-right {
-  transform: translate(150%, -50%);
+  transform: translate(150%, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
 }
 
-/* === Closing states === */
+/* Closing state → reapply hidden transform */
 .r3d-floater--closing.r3d-floater--from-top {
-  transform: translate(-50%, -150%) !important;
+  transform: translate(-50%, -150%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale)) !important;
   opacity: 0 !important;
 }
 .r3d-floater--closing.r3d-floater--from-bottom {
-  transform: translate(-50%, 150%) !important;
+  transform: translate(-50%, 150%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale)) !important;
   opacity: 0 !important;
 }
 .r3d-floater--closing.r3d-floater--from-left {
-  transform: translate(-150%, -50%) !important;
+  transform: translate(-150%, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale)) !important;
   opacity: 0 !important;
 }
 .r3d-floater--closing.r3d-floater--from-right {
-  transform: translate(150%, -50%) !important;
+  transform: translate(150%, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale)) !important;
   opacity: 0 !important;
 }
 
-/* === Panel Container === */
+/* Panel Container */
 .r3d-floater__panel {
   background: #fff;
   border: 1px solid #ccc;

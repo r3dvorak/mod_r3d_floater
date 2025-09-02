@@ -34,6 +34,8 @@ $data = [
     'show_close' => (bool) $params->get('show_close', 1),
     'frequency' => $params->get('frequency', 'session'),
     'cookie_prefix' => $params->get('cookie_prefix', 'r3dFloater'),
+    'rotate_start' => (int) $params->get('rotate_start', -90),
+    'scale_start' => (int) $params->get('scale_start', 30),
     'content_html' => '',
 ];
 

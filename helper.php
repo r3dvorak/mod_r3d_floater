@@ -6,7 +6,7 @@
  * @author      Richard Dvorak, r3d.de
  * @copyright   Copyright (C) 2025 Richard Dvorak, https://r3d.de
  * @license     GNU GPL v3 or later (https://www.gnu.org/licenses/gpl-3.0.html)
- * @version     5.2.0
+ * @version     5.3.0
  * @file        modules/mod_r3d_floater/helper.php
  */
 
@@ -39,6 +39,11 @@ class ModR3dFloaterHelper
             'show_close' => (bool) $params->get('show_close', 1),
             'frequency' => $params->get('frequency', 'session'),
             'cookie_prefix' => $params->get('cookie_prefix', 'r3dFloater'),
+            'speed_in' => (int) $params->get('speed_in', 800),
+            'speed_out' => (int) $params->get('speed_out', 800),
+            'zindex' => (int) $params->get('zindex', 2147483647),
+            'rotate_start' => (int) $params->get('rotate_start', -90),
+            'scale_start' => (int) $params->get('scale_start', 30),
             'content_html' => '',
         ];
 
