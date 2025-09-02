@@ -2,8 +2,8 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/js/floater.js
- * @version     5.3.2
- * @description Controls opening, closing, animation and positioning of the floater
+ * @version     5.3.3
+ * @description Restores 5.3.0 animation logic but honors backend rotate/scale/speed
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,40 +25,33 @@ document.addEventListener("DOMContentLoaded", () => {
   floater.style.width = width + "px";
   floater.style.height = height + "px";
 
-  // Apply custom animation values
+  // Apply backend values to CSS vars (used in --from-* states)
   floater.style.setProperty("--r3d-rotate", rotateStart + "deg");
   floater.style.setProperty("--r3d-scale", scaleStart);
-  floater.style.setProperty("--r3d-rotate-target", "0deg");
-  floater.style.setProperty("--r3d-scale-target", "1");
 
-  // Apply transition speed dynamically (for opening)
-  floater.style.setProperty("--r3d-speed", speedIn + "ms");
+  // Apply transition speed for opening
+  floater.style.transition = `transform ${speedIn}ms ease-in-out, opacity ${speedIn}ms ease-in-out`;
 
-  // Start hidden at directional position
+  // Add initial direction class
   floater.classList.add(`r3d-floater--from-${direction}`);
 
   // === Open Floater ===
   const openFloater = () => {
-    // Remove "from-direction" so transition can animate
-    floater.classList.remove(`r3d-floater--from-${direction}`);
     floater.classList.add("r3d-floater--visible");
     floater.setAttribute("aria-hidden", "false");
   };
 
   // === Close Floater ===
   const closeFloater = () => {
-    // Switch transition speed for close
-    floater.style.setProperty("--r3d-speed", speedOut + "ms");
+    floater.style.transition = `transform ${speedOut}ms ease-in-out, opacity ${speedOut}ms ease-in-out`;
 
-    // Remove visible, reapply directional transform
     floater.classList.remove("r3d-floater--visible");
-    floater.classList.add("r3d-floater--closing", `r3d-floater--from-${direction}`);
+    floater.classList.add("r3d-floater--closing");
     floater.setAttribute("aria-hidden", "true");
 
     setTimeout(() => {
       floater.classList.remove("r3d-floater--closing");
-      // Reset transition speed back to open
-      floater.style.setProperty("--r3d-speed", speedIn + "ms");
+      floater.style.transition = `transform ${speedIn}ms ease-in-out, opacity ${speedIn}ms ease-in-out`;
     }, speedOut);
   };
 
