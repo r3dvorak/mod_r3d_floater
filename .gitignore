@@ -1,0 +1,28 @@
+# IDE/Editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Build artifacts
+*.zip
+*.tar.gz
+*.bak
+*.tmp
+*.log
+
+# Composer / Node (falls jemals genutzt)
+vendor/
+node_modules/
+package-lock.json
+yarn.lock
+
+# PHPStorm/Netbeans/VS Code cache
+nbproject/private/
+.phpunit.result.cache
