@@ -6,7 +6,7 @@
  * @author      Richard Dvorak, r3d.de
  * @copyright   Copyright (C) 2025 Richard Dvorak, https://r3d.de
  * @license     GNU GPL v3 or later (https://www.gnu.org/licenses/gpl-3.0.html)
- * @version     5.4.0
+ * @version     5.4.1
  * @file        modules/mod_r3d_floater/helper.php
  */
 
@@ -34,7 +34,7 @@ class ModR3dFloaterHelper
             'width' => (int) $params->get('width', 560),
             'height' => (int) $params->get('height', 400),
 
-            'auto_open' => (bool) $params->get('auto_open', 1),
+            'start_delay' => (int) $params->get('start_delay', 0),
             'show_close' => (bool) $params->get('show_close', 1),
 
             // IMPORTANT: keep in sync with XML (every/session/day/week)

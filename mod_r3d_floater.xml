@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" client="site" method="upgrade" version="5.0">
   <name>MOD_R3D_FLOATER</name>
-  <version>5.4.0</version>
+  <version>5.4.2</version>
   <creationDate>2025-09-02</creationDate>
   <author>Richard Dvorak, r3d.de</author>
   <authorUrl>https://r3d.de</authorUrl>
@@ -47,9 +47,14 @@
           <option value="module">MOD_R3D_FLOATER_OPTION_MODULE</option>
         </field>
 
-        <!-- Custom HTML with WYSIWYG editor -->
+       <!-- Custom HTML with WYSIWYG editor, now with default -->
         <field name="custom_html" type="editor" filter="raw" buttons="true" hide="pagebreak,readmore"
-              label="MOD_R3D_FLOATER_FIELD_HTML" description="MOD_R3D_FLOATER_FIELD_HTML_DESC" />
+              label="MOD_R3D_FLOATER_FIELD_HTML" description="MOD_R3D_FLOATER_FIELD_HTML_DESC">
+          <![CDATA[
+            <h1 style="text-align: center;"><span style="color: #68d95b;">Hallo World!</span></h1>
+            <p style="text-align: center;"><span style="color: #6d6d6d;">👉 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</span></p>
+          ]]>
+        </field>
 
         <!-- Embedded module selector -->
         <field name="embed_module_id" type="sql"
@@ -81,11 +86,10 @@
               min="100" max="1080" step="10" />
 
         <!-- Behavior -->
-        <field name="auto_open" type="radio" default="1"
-              label="MOD_R3D_FLOATER_FIELD_AUTO" description="MOD_R3D_FLOATER_FIELD_AUTO_DESC">
-          <option value="1">JYES</option>
-          <option value="0">JNO</option>
-        </field>
+        <!-- Delay before auto-open -->
+        <field name="start_delay" type="number" default="0" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_DELAY"
+              description="MOD_R3D_FLOATER_FIELD_DELAY_DESC" />
 
         <field name="show_close" type="radio" default="1"
               label="MOD_R3D_FLOATER_FIELD_CLOSE" description="MOD_R3D_FLOATER_FIELD_CLOSE_DESC">
