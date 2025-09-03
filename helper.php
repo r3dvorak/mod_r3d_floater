@@ -6,7 +6,7 @@
  * @author      Richard Dvorak, r3d.de
  * @copyright   Copyright (C) 2025 Richard Dvorak, https://r3d.de
  * @license     GNU GPL v3 or later (https://www.gnu.org/licenses/gpl-3.0.html)
- * @version     5.2.7
+ * @version     5.4.0
  * @file        modules/mod_r3d_floater/helper.php
  */
 
