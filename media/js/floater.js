@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // After the animation, drop the closing helper; keep the direction class for the next open
     setTimeout(() => {
       floater.classList.remove("r3d-floater--closing");
-      floater.style.transition = `transform ${speedIn}ms ease-in-out, opacity ${speedIn}ms ease-in-out`;
     }, speedOut);
   };
 
