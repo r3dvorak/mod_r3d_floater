@@ -2,7 +2,7 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/js/floater.js
- * @version     5.2.4
+ * @version     5.2.5
  * @description Floater controller with reset-to-hidden (center-first system)
  */
 
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Open ===
   const openFloater = () => {
+    floater.classList.remove("r3d-floater--hidden"); // ensure it's not hidden anymore
     floater.style.transition = `transform ${speedIn}ms ease-in-out, opacity ${speedIn}ms ease-in-out`;
     floater.classList.add("r3d-floater--visible");
     floater.setAttribute("aria-hidden", "false");
@@ -39,14 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Close ===
   const closeFloater = () => {
+    floater.classList.add("r3d-floater--closing");
     floater.style.transition = `transform ${speedOut}ms ease-in-out, opacity ${speedOut}ms ease-in-out`;
     floater.classList.remove("r3d-floater--visible");
-    floater.classList.add("r3d-floater--closing");
     floater.setAttribute("aria-hidden", "true");
 
     setTimeout(() => {
       floater.classList.remove("r3d-floater--closing");
-      floater.classList.add(`r3d-floater--from-${direction}`); // ✅ reset to hidden position
+      floater.classList.add("r3d-floater--hidden"); // ensure consistent state
       floater.style.transition = "";
     }, speedOut);
   };
