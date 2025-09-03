@@ -6,7 +6,7 @@
  * @author      Richard Dvorak, r3d.de
  * @copyright   Copyright (C) 2025 Richard Dvorak, https://r3d.de
  * @license     GNU GPL v3 or later (https://www.gnu.org/licenses/gpl-3.0.html)
- * @version     5.2.0
+ * @version     5.4.0
  * @file        modules/mod_r3d_floater/mod_r3d_floater.php
  */
 
@@ -16,38 +16,44 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Uri\Uri;
 
-// Media assets laden (korrekte URLs mit Uri::root())
+// Media assets (Uri::root() absolute is fine; Uri::root(true) would be path-only)
 $doc = Factory::getApplication()->getDocument();
 $base = Uri::root() . 'media/mod_r3d_floater/';
 
 $doc->addStyleSheet($base . 'css/style.css');
 $doc->addScript($base . 'js/floater.js');
 
-// Parameter vorbereiten
+// Collect params for the layout (include animation params!)
 $data = [
-    'module_id' => $module->id,
+    'module_id' => (int) $module->id,
+
     'zindex' => (int) $params->get('zindex', 2147483647),
-    'direction' => $params->get('direction', 'right'),
+    'direction' => (string) $params->get('direction', 'right'),
     'width' => (int) $params->get('width', 560),
     'height' => (int) $params->get('height', 400),
+
     'auto_open' => (bool) $params->get('auto_open', 1),
     'show_close' => (bool) $params->get('show_close', 1),
-    'frequency' => $params->get('frequency', 'session'),
-    'cookie_prefix' => $params->get('cookie_prefix', 'r3dFloater'),
+    'frequency' => (string) $params->get('frequency', 'session'),
+    'cookie_prefix' => (string) $params->get('cookie_prefix', 'r3dFloater'),
+
+    // NEW / IMPORTANT: animation-related params
+    'speed_in' => (int) $params->get('speed_in', 800),
+    'speed_out' => (int) $params->get('speed_out', 800),
     'rotate_start' => (int) $params->get('rotate_start', -90),
     'scale_start' => (int) $params->get('scale_start', 30),
+
     'content_html' => '',
 ];
 
-// Content-Quelle bestimmen
-$source = $params->get('content_source', 'custom');
+// Content source
+$source = (string) $params->get('content_source', 'custom');
 
 if ($source === 'custom') {
-    $data['content_html'] = $params->get('custom_html', '');
+    $data['content_html'] = (string) $params->get('custom_html', '');
 } elseif ($source === 'module') {
     $embedId = (int) $params->get('embed_module_id');
     if ($embedId > 0) {
-        // Eingebettetes Modul laden
         $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true)
             ->select('*')
@@ -63,5 +69,5 @@ if ($source === 'custom') {
     }
 }
 
-// Template laden
+// Render layout
 require ModuleHelper::getLayoutPath('mod_r3d_floater', $params->get('layout', 'default'));
