@@ -2,7 +2,7 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/js/floater.js
- * @version     5.4.4
+ * @version     5.5.0
  * @description Controls opening, closing, animation and positioning of the floater
  */
 
@@ -11,24 +11,25 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!floater) return;
 
   // === Params ===
-  const direction    = (floater.dataset.direction || "right").trim().toLowerCase();
-  const speedIn      = parseInt(floater.dataset.speedIn  || "800", 10);
-  const speedOut     = parseInt(floater.dataset.speedOut || "800", 10);
-  const zIndex       = parseInt(floater.dataset.zindex   || "2147483647", 10);
-  const width        = parseInt(floater.dataset.width    || "560", 10);
-  const height       = parseInt(floater.dataset.height   || "400", 10);
-  const startDelay   = parseInt(floater.dataset.startDelay || "0", 10);
-  const rotateStart  = parseInt(floater.dataset.rotateStart || "-90", 10);
-  const scaleStart   = Math.max(0.05, Math.min(5, (parseInt(floater.dataset.scaleStart || "30", 10) / 100)));
-  const frequency    = floater.dataset.frequency || "every";
-  const cookieKey    = (floater.dataset.keyPrefix || "r3dFloater") + "_" + (floater.dataset.mid || "0");
+  const direction      = (floater.dataset.direction || "right").trim().toLowerCase();
+  const speedIn        = parseInt(floater.dataset.speedIn  || "800", 10);
+  const speedOut       = parseInt(floater.dataset.speedOut || "800", 10);
+  const zIndex         = parseInt(floater.dataset.zindex   || "2147483647", 10);
+  const width          = parseInt(floater.dataset.width    || "560", 10);
+  const height         = parseInt(floater.dataset.height   || "400", 10);
+  const startDelay     = parseInt(floater.dataset.startDelay || "0", 10);
+  const rotateStart    = parseInt(floater.dataset.rotateStart || "-90", 10);
+  const scaleStart     = Math.max(0.05, Math.min(5, (parseInt(floater.dataset.scaleStart || "30", 10) / 100)));
+  const autoCloseDelay = parseInt(floater.dataset.autoclose || "0", 10);
+  const frequency      = floater.dataset.frequency || "every";
+  const cookieKey      = (floater.dataset.keyPrefix || "r3dFloater") + "_" + (floater.dataset.mid || "0");
 
   // === Cookie helpers ===
   function setCookie(name, value, days) {
     let expires = "";
     if (days > 0) {
       const d = new Date();
-      d.setTime(d.getTime() + (days*24*60*60*1000));
+      d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
       expires = "; expires=" + d.toUTCString();
     }
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
@@ -66,6 +67,13 @@ document.addEventListener("DOMContentLoaded", () => {
     floater.classList.add("r3d-floater--visible");
     floater.setAttribute("aria-hidden", "false");
 
+    // === NEW: Auto close if set ===
+    if (autoCloseDelay > 0) {
+      setTimeout(() => {
+        closeFloater();
+      }, autoCloseDelay);
+    }
+
     // Save cookie depending on frequency
     if (frequency === "once") {
       setCookie(cookieKey, "1", 3650); // ~10 years
@@ -95,11 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let shouldShow = true;
   const existing = getCookie(cookieKey);
 
-  if (frequency === "once"   && existing) shouldShow = false;
-  if (frequency === "day"    && existing) shouldShow = false;
-  if (frequency === "week"   && existing) shouldShow = false;
-  if (frequency === "month"  && existing) shouldShow = false;
-  if (frequency === "session"&& existing) shouldShow = false;
+  if (frequency === "once"    && existing) shouldShow = false;
+  if (frequency === "day"     && existing) shouldShow = false;
+  if (frequency === "week"    && existing) shouldShow = false;
+  if (frequency === "month"   && existing) shouldShow = false;
+  if (frequency === "session" && existing) shouldShow = false;
 
   if (shouldShow) {
     setTimeout(openFloater, startDelay);

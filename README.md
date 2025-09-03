@@ -47,6 +47,17 @@ The panel can contain **custom HTML** (with the Joomla editor) or **embed anothe
 
 ---
 
+📜 Changelog (Auszug)
+
+5.5.0 – Neu: Auto-Close-Parameter (ms).
+5.4.4 – Fix: Frequenzkontrolle über Cookies.
+5.4.0 – Delay-Parameter, Entfernung der Option „Automatisch öffnen“.
+5.3.0 – Rotation/Skalierung beim Einfahren, Animation parametrisierbar.
+5.2.x – Stabilisierung von Ein-/Ausblend-Animationen, bessere Parameternormalisierung.
+5.0.0 – Initial Release für Joomla! 5: Custom HTML oder Modul, Fade-In, Frequenz, Close-Button, mehrere Instanzen.
+
+---
+
 📜 License
 
 GNU General Public License v3 or later.

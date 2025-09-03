@@ -6,7 +6,7 @@
  * @author      Richard Dvorak, r3d.de
  * @copyright   Copyright (C) 2025 Richard Dvorak, https://r3d.de
  * @license     GNU GPL v3 or later (https://www.gnu.org/licenses/gpl-3.0.html)
- * @version     5.4.3
+ * @version     5.5.0
  * @file        modules/mod_r3d_floater/tmpl/default.php
  */
 
@@ -33,6 +33,7 @@ $height = $h > 0 ? $h : 400;
 $speed_in = max(0, min($sin, 10000));
 $speed_out = max(0, min($sout, 10000));
 $show_close = !empty($data['show_close']);
+$autoclose = (int) ($data['autoclose'] ?? 0);
 
 // IMPORTANT: match your XML options
 $allowedFreq = ['every', 'session', 'day', 'week'];
@@ -52,7 +53,7 @@ if (!in_array($direction, $validDirections, true)) {
     style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;" data-mid="<?php echo $mid; ?>"
     data-direction="<?php echo $direction; ?>" data-width="<?php echo $width; ?>" data-height="<?php echo $height; ?>"
     data-start-delay="<?php echo $startDelay; ?>" data-show-close="<?php echo $show_close ? 'true' : 'false'; ?>"
-    data-frequency="<?php echo $frequency; ?>"
+    data-autoclose="<?php echo $autoclose; ?>" data-frequency="<?php echo $frequency; ?>"
     data-key-prefix="<?php echo htmlspecialchars($key_prefix, ENT_QUOTES, 'UTF-8'); ?>"
     data-speed-in="<?php echo $speed_in; ?>" data-speed-out="<?php echo $speed_out; ?>"
     data-rotate-start="<?php echo $rotateStart; ?>" data-scale-start="<?php echo $scaleStart; ?>"

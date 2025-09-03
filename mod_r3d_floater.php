@@ -6,7 +6,7 @@
  * @author      Richard Dvorak, r3d.de
  * @copyright   Copyright (C) 2025 Richard Dvorak, https://r3d.de
  * @license     GNU GPL v3 or later (https://www.gnu.org/licenses/gpl-3.0.html)
- * @version     5.4.3
+ * @version     5.5.0
  * @file        modules/mod_r3d_floater/mod_r3d_floater.php
  */
 
@@ -34,6 +34,7 @@ $data = [
 
     'auto_open' => (bool) $params->get('auto_open', 1),
     'show_close' => (bool) $params->get('show_close', 1),
+    'autoclose' => (int) $params->get('autoclose', 0),
     'frequency' => (string) $params->get('frequency', 'session'),
     'cookie_prefix' => (string) $params->get('cookie_prefix', 'r3dFloater'),
 
