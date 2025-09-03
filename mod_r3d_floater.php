@@ -6,7 +6,7 @@
  * @author      Richard Dvorak, r3d.de
  * @copyright   Copyright (C) 2025 Richard Dvorak, https://r3d.de
  * @license     GNU GPL v3 or later (https://www.gnu.org/licenses/gpl-3.0.html)
- * @version     5.4.0
+ * @version     5.4.3
  * @file        modules/mod_r3d_floater/mod_r3d_floater.php
  */
 
@@ -42,6 +42,7 @@ $data = [
     'speed_out' => (int) $params->get('speed_out', 800),
     'rotate_start' => (int) $params->get('rotate_start', -90),
     'scale_start' => (int) $params->get('scale_start', 30),
+    'start_delay' => (int) $params->get('start_delay', 0),
 
     'content_html' => '',
 ];
@@ -58,8 +59,7 @@ if ($source === 'custom') {
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__modules'))
-            ->where($db->quoteName('id') . ' = :id')
-            ->bind(':id', $embedId, \PDO::PARAM_INT);
+            ->where($db->quoteName('id') . ' = ' . (int) $embedId);
         $db->setQuery($query);
         $embedModule = $db->loadObject();
 
