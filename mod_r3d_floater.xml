@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" client="site" method="upgrade" version="5.0">
   <name>MOD_R3D_FLOATER</name>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
   <creationDate>2025-09-02</creationDate>
   <author>Richard Dvorak, r3d.de</author>
   <authorUrl>https://r3d.de</authorUrl>
@@ -42,29 +42,30 @@
 
         <!-- Source selector -->
         <field name="content_source" type="list" default="custom"
-               label="MOD_R3D_FLOATER_FIELD_SOURCE" description="MOD_R3D_FLOATER_FIELD_SOURCE_DESC">
+              label="MOD_R3D_FLOATER_FIELD_SOURCE" description="MOD_R3D_FLOATER_FIELD_SOURCE_DESC">
           <option value="custom">MOD_R3D_FLOATER_OPTION_CUSTOM</option>
           <option value="module">MOD_R3D_FLOATER_OPTION_MODULE</option>
         </field>
 
         <!-- Custom HTML with WYSIWYG editor -->
         <field name="custom_html" type="editor" filter="raw" buttons="true" hide="pagebreak,readmore"
-               label="MOD_R3D_FLOATER_FIELD_HTML" description="MOD_R3D_FLOATER_FIELD_HTML_DESC" />
+              label="MOD_R3D_FLOATER_FIELD_HTML" description="MOD_R3D_FLOATER_FIELD_HTML_DESC" />
 
         <!-- Embedded module selector -->
         <field name="embed_module_id" type="sql"
-               label="MOD_R3D_FLOATER_FIELD_EMBED_ID" description="MOD_R3D_FLOATER_FIELD_EMBED_ID_DESC"
-               query="SELECT id AS value, CONCAT(title,' (',module,')') AS text FROM #__modules WHERE published=1 ORDER BY title"
-               key_field="value" value_field="text" />
+              label="MOD_R3D_FLOATER_FIELD_EMBED_ID" description="MOD_R3D_FLOATER_FIELD_EMBED_ID_DESC"
+              query="SELECT id AS value, CONCAT(title,' (',module,')') AS text FROM #__modules WHERE published=1 ORDER BY title"
+              key_field="value" value_field="text" />
 
         <!-- Z-Index -->
         <field name="zindex" type="number" default="2147483647" filter="integer"
               label="MOD_R3D_FLOATER_FIELD_ZINDEX"
-              description="MOD_R3D_FLOATER_FIELD_ZINDEX_DESC" />
+              description="MOD_R3D_FLOATER_FIELD_ZINDEX_DESC"
+              min="0" max="2147483647" step="1" />
 
         <!-- Direction -->
         <field name="direction" type="list" default="right"
-               label="MOD_R3D_FLOATER_FIELD_DIR" description="MOD_R3D_FLOATER_FIELD_DIR_DESC">
+              label="MOD_R3D_FLOATER_FIELD_DIR" description="MOD_R3D_FLOATER_FIELD_DIR_DESC">
           <option value="left">MOD_R3D_FLOATER_DIR_LEFT</option>
           <option value="right">MOD_R3D_FLOATER_DIR_RIGHT</option>
           <option value="top">MOD_R3D_FLOATER_DIR_TOP</option>
@@ -73,42 +74,59 @@
 
         <!-- Size -->
         <field name="width" type="number" default="560" filter="integer"
-               label="MOD_R3D_FLOATER_FIELD_WIDTH" />
+              label="MOD_R3D_FLOATER_FIELD_WIDTH" description="MOD_R3D_FLOATER_FIELD_WIDTH_DESC"
+              min="100" max="1920" step="10" />
         <field name="height" type="number" default="400" filter="integer"
-               label="MOD_R3D_FLOATER_FIELD_HEIGHT" />
+              label="MOD_R3D_FLOATER_FIELD_HEIGHT" description="MOD_R3D_FLOATER_FIELD_HEIGHT_DESC"
+              min="100" max="1080" step="10" />
 
         <!-- Behavior -->
         <field name="auto_open" type="radio" default="1"
-               label="MOD_R3D_FLOATER_FIELD_AUTO" description="MOD_R3D_FLOATER_FIELD_AUTO_DESC">
+              label="MOD_R3D_FLOATER_FIELD_AUTO" description="MOD_R3D_FLOATER_FIELD_AUTO_DESC">
           <option value="1">JYES</option>
           <option value="0">JNO</option>
         </field>
 
         <field name="show_close" type="radio" default="1"
-               label="MOD_R3D_FLOATER_FIELD_CLOSE" description="MOD_R3D_FLOATER_FIELD_CLOSE_DESC">
+              label="MOD_R3D_FLOATER_FIELD_CLOSE" description="MOD_R3D_FLOATER_FIELD_CLOSE_DESC">
           <option value="1">JYES</option>
           <option value="0">JNO</option>
         </field>
 
-        <field name="frequency" type="list" default="session"
-               label="MOD_R3D_FLOATER_FIELD_FREQ" description="MOD_R3D_FLOATER_FIELD_FREQ_DESC">
+        <!-- Frequency -->
+        <field name="frequency" type="list" default="once"
+              label="MOD_R3D_FLOATER_FIELD_FREQ" description="MOD_R3D_FLOATER_FIELD_FREQ_DESC">
+          <option value="once">MOD_R3D_FLOATER_FREQ_ONCE</option>
           <option value="every">MOD_R3D_FLOATER_FREQ_EVERY</option>
-          <option value="session">MOD_R3D_FLOATER_FREQ_SESSION</option>
-          <option value="day">MOD_R3D_FLOATER_FREQ_DAY</option>
-          <option value="week">MOD_R3D_FLOATER_FREQ_WEEK</option>
+          <option value="daily">MOD_R3D_FLOATER_FREQ_DAY</option>
+          <option value="weekly">MOD_R3D_FLOATER_FREQ_WEEK</option>
+          <option value="monthly">MOD_R3D_FLOATER_FREQ_MONTH</option>
         </field>
 
         <field name="cookie_prefix" type="text" default="r3dFloater"
-               label="MOD_R3D_FLOATER_FIELD_KEY" description="MOD_R3D_FLOATER_FIELD_KEY_DESC" />
+              label="MOD_R3D_FLOATER_FIELD_KEY" description="MOD_R3D_FLOATER_FIELD_KEY_DESC" />
 
         <!-- Animation speed -->
         <field name="speed_in" type="number" default="800" filter="integer"
-               label="MOD_R3D_FLOATER_FIELD_SPEED_IN"
-               description="MOD_R3D_FLOATER_FIELD_SPEED_IN_DESC" />
+              label="MOD_R3D_FLOATER_FIELD_SPEED_IN"
+              description="MOD_R3D_FLOATER_FIELD_SPEED_IN_DESC"
+              min="0" max="10000" step="50" />
 
         <field name="speed_out" type="number" default="800" filter="integer"
-               label="MOD_R3D_FLOATER_FIELD_SPEED_OUT"
-               description="MOD_R3D_FLOATER_FIELD_SPEED_OUT_DESC" />
+              label="MOD_R3D_FLOATER_FIELD_SPEED_OUT"
+              description="MOD_R3D_FLOATER_FIELD_SPEED_OUT_DESC"
+              min="0" max="10000" step="50" />
+
+        <!-- Rotation & Scale -->
+        <field name="rotate_start" type="number" default="-90" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_ROTATE"
+              description="MOD_R3D_FLOATER_FIELD_ROTATE_DESC"
+              min="-360" max="360" step="5" />
+
+        <field name="scale_start" type="number" default="30" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_SCALE"
+              description="MOD_R3D_FLOATER_FIELD_SCALE_DESC"
+              min="10" max="200" step="5" />
 
       </fieldset>
     </fields>

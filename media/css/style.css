@@ -2,66 +2,67 @@
  * @package     Joomla.Module
  * @subpackage  mod_r3d_floater
  * @file        media/mod_r3d_floater/css/style.css
- * @version     5.2.4
- * @description Floater animations with center-first positioning
+ * @version     5.2.6
+ * @description Variable-driven transforms for reliable slide-in/out + rotate/scale
  */
 
 .r3d-floater {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 2147483647;
+
+  /* Transform driven entirely by CSS variables */
+  transform: translate(var(--r3d-tx, -50%), var(--r3d-ty, -50%))
+             rotate(var(--r3d-rot, 0deg))
+             scale(var(--r3d-scale, 1));
+
   opacity: 0;
   pointer-events: none;
+  z-index: var(--r3d-z, 2147483647);
 
-  --r3d-rotate: -90deg;
-  --r3d-scale: 0.3;
+  /* Durations set by JS via --r3d-dur (in ms) */
+  transition:
+    transform var(--r3d-dur, 800ms) ease-in-out,
+    opacity  var(--r3d-dur, 800ms) ease-in-out;
+
+  will-change: transform, opacity;
 }
 
-/* Final state = perfectly centered */
-.r3d-floater--visible {
-  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+/* Visible = centered, no rotation, full scale */
+.r3d-floater.r3d-floater--visible {
+  --r3d-tx: -50%;
+  --r3d-ty: -50%;
+  --r3d-rot: 0deg;
+  --r3d-scale: 1;
+
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Hidden states = centered, then pushed out of view */
-.r3d-floater--from-top {
-  transform: translate(-50%, -100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+/* Off-screen start positions per direction (only set tx/ty here) */
+.r3d-floater.r3d-floater--from-top {
+  --r3d-tx: -50%;
+  --r3d-ty: -150%;
 }
-.r3d-floater--from-bottom {
-  transform: translate(-50%, 100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+.r3d-floater.r3d-floater--from-bottom {
+  --r3d-tx: -50%;
+  --r3d-ty: 150%;
 }
-.r3d-floater--from-left {
-  transform: translate(-100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
+.r3d-floater.r3d-floater--from-left {
+  --r3d-tx: -150%;
+  --r3d-ty: -50%;
 }
-.r3d-floater--from-right {
-  transform: translate(100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
-}
-
-/* Closing states = back to hidden position */
-.r3d-floater--closing.r3d-floater--from-top {
-  transform: translate(-50%, -100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
-  opacity: 0;
-}
-.r3d-floater--closing.r3d-floater--from-bottom {
-  transform: translate(-50%, 100vh) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
-  opacity: 0;
-}
-.r3d-floater--closing.r3d-floater--from-left {
-  transform: translate(-100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
-  opacity: 0;
-}
-.r3d-floater--closing.r3d-floater--from-right {
-  transform: translate(100vw, -50%) rotate(var(--r3d-rotate)) scale(var(--r3d-scale));
-  opacity: 0;
+/* Use viewport width to guarantee it’s off-screen regardless of module width */
+.r3d-floater.r3d-floater--from-right {
+  --r3d-tx: calc(50vw + 50%);
+  --r3d-ty: -50%;
 }
 
 /* Panel */
 .r3d-floater__panel {
   background: #fff;
   border: 1px solid #ccc;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
   border-radius: 6px;
   overflow: hidden;
   position: relative;
@@ -89,19 +90,15 @@
   color: #666;
   transition: color 0.2s ease;
 }
-.r3d-floater__close:hover {
-  color: #000;
-}
+.r3d-floater__close:hover { color: #000; }
 
-/* Default fallback */
+/* Default placeholder */
 .r3d-floater-default {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  display: flex; align-items: center; justify-content: center; height: 100%;
 }
-.r3d-floater-default img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+.r3d-floater-default img { max-width: 100%; height: auto; display: block; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .r3d-floater { transition: none; }
 }
