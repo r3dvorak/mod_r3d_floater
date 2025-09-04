@@ -1,0 +1,78 @@
+name: Build & Release R3D Floater ZIP
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 5.5.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Stage module into mod_r3d_floater/ no matter where your files live
+      - name: Stage module into folder
+        id: stage
+        shell: bash
+        run: |
+          set -e
+          STAGE="mod_r3d_floater"
+
+          if [ -f "mod_r3d_floater/mod_r3d_floater.xml" ]; then
+            echo "✅ Found module already in folder: $STAGE"
+          else
+            echo "ℹ️ Folder $STAGE not found. Staging from repo root..."
+            mkdir -p "$STAGE"
+
+            # Copy common files if they exist
+            for p in mod_r3d_floater.php helper.php mod_r3d_floater.xml; do
+              if [ -f "$p" ]; then cp "$p" "$STAGE"/; fi
+            done
+
+            # Copy typical module asset folders if present
+            for d in tmpl language media assets css js; do
+              if [ -d "$d" ]; then cp -r "$d" "$STAGE"/; fi
+            done
+          fi
+
+          # Sanity check
+          if [ ! -f "$STAGE/mod_r3d_floater.xml" ]; then
+            echo "❌ Cannot find $STAGE/mod_r3d_floater.xml after staging."
+            echo "Contents of $STAGE:"
+            ls -la "$STAGE" || true
+            exit 12
+          fi
+
+          echo "stage_dir=$STAGE" >> "$GITHUB_OUTPUT"
+
+      - name: Build ZIP
+        shell: bash
+        run: |
+          set -e
+          mkdir -p build
+          OUT="build/${{ steps.stage.outputs.stage_dir }}_v${{ github.event.inputs.version }}.zip"
+          zip -r "$OUT" "${{ steps.stage.outputs.stage_dir }}" \
+            -x "${{ steps.stage.outputs.stage_dir }}/.git*" \
+               "${{ steps.stage.outputs.stage_dir }}/.github/*" \
+               "${{ steps.stage.outputs.stage_dir }}/README.md" \
+               "${{ steps.stage.outputs.stage_dir }}/CHANGELOG.md"
+          echo "Built: $OUT"
+
+      - name: Create / Update GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          name: Release v${{ github.event.inputs.version }}
+          make_latest: true
+          generate_release_notes: true
+          files: build/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
