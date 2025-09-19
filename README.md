@@ -1,6 +1,6 @@
 # R3D Floater
 
-A Joomla 5 module that displays a **floating panel** on selected pages.  
+A Joomla 4 and 5 module that displays a **floating panel** on selected pages.  
 The panel can contain **custom HTML** (with the Joomla editor) or **embed another module**, slides in from any screen edge, and supports **frequency control** and **delayed auto-open**.
 
 ---
