@@ -1,0 +1,34 @@
+# Ignore everything by default
+/*
+
+# Allow src folder
+!/src/
+!/src/**
+
+# Allow root project files
+!README.md
+!.gitignore
+
+# IDE/Editor settings
+*.code-workspace
+.vscode/
+.idea/
+.DS_Store
+desktop.ini
+*.zip
+*.tar.gz
+*.bak
+*.tmp
+*.log
+
+# Composer / Node (falls jemals genutzt)
+vendor/
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build + dist
+/build/
+/dist/
+/tmp/
+/temp/

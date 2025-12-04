@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+  <name>MOD_R3D_FLOATER</name>
+  <version>5.5.0</version>
+  <creationDate>2025-09-02</creationDate>
+  <author>Richard Dvorak, r3d.de</author>
+  <authorUrl>https://r3d.de</authorUrl>
+  <license>GPL-3.0-or-later</license>
+  <description>MOD_R3D_FLOATER_DESC</description>
+
+  <files>
+    <filename module="mod_r3d_floater">mod_r3d_floater.php</filename>
+    <filename>helper.php</filename>
+    <folder>tmpl</folder>
+    <folder>language</folder>
+
+    <!-- Explicit language files -->
+    <filename>language/en-GB/en-GB.mod_r3d_floater.ini</filename>
+    <filename>language/en-GB/en-GB.mod_r3d_floater.sys.ini</filename>
+    <filename>language/de-DE/de-DE.mod_r3d_floater.ini</filename>
+    <filename>language/de-DE/de-DE.mod_r3d_floater.sys.ini</filename>
+  </files>
+
+  <languages>
+    <language tag="en-GB">language/en-GB/en-GB.mod_r3d_floater.ini</language>
+    <language tag="en-GB">language/en-GB/en-GB.mod_r3d_floater.sys.ini</language>
+    <language tag="de-DE">language/de-DE/de-DE.mod_r3d_floater.ini</language>
+    <language tag="de-DE">language/de-DE/de-DE.mod_r3d_floater.sys.ini</language>
+  </languages>
+
+  <!-- Media files go to /media/mod_r3d_floater/ -->
+  <media folder="media" destination="mod_r3d_floater">
+    <folder>css</folder>
+    <folder>js</folder>
+    <folder>images</folder>
+    <filename>joomla.asset.json</filename>
+  </media>
+
+  <config>
+    <fields name="params">
+      <fieldset name="basic" label="JFIELD_PARAMS_BASIC_LABEL">
+
+        <!-- Source selector -->
+        <field name="content_source" type="list" default="custom"
+              label="MOD_R3D_FLOATER_FIELD_SOURCE" description="MOD_R3D_FLOATER_FIELD_SOURCE_DESC">
+          <option value="custom">MOD_R3D_FLOATER_OPTION_CUSTOM</option>
+          <option value="module">MOD_R3D_FLOATER_OPTION_MODULE</option>
+        </field>
+
+       <!-- Custom HTML with WYSIWYG editor, now with default -->
+        <field name="custom_html" type="editor" filter="raw" buttons="true" hide="pagebreak,readmore"
+              label="MOD_R3D_FLOATER_FIELD_HTML" description="MOD_R3D_FLOATER_FIELD_HTML_DESC">
+          <![CDATA[
+            <h1 style="text-align: center;"><span style="color: #68d95b;">Hallo World!</span></h1>
+            <p style="text-align: center;"><span style="color: #6d6d6d;">👉 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</span></p>
+          ]]>
+        </field>
+
+        <!-- Embedded module selector -->
+        <field name="embed_module_id" type="sql"
+              label="MOD_R3D_FLOATER_FIELD_EMBED_ID" description="MOD_R3D_FLOATER_FIELD_EMBED_ID_DESC"
+              query="SELECT id AS value, CONCAT(title,' (',module,')') AS text FROM #__modules WHERE published=1 ORDER BY title"
+              key_field="value" value_field="text" />
+
+        <!-- Z-Index -->
+        <field name="zindex" type="number" default="2147483647" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_ZINDEX"
+              description="MOD_R3D_FLOATER_FIELD_ZINDEX_DESC"
+              min="0" max="2147483647" step="1" />
+
+        <!-- Direction -->
+        <field name="direction" type="list" default="right"
+              label="MOD_R3D_FLOATER_FIELD_DIR" description="MOD_R3D_FLOATER_FIELD_DIR_DESC">
+          <option value="left">MOD_R3D_FLOATER_DIR_LEFT</option>
+          <option value="right">MOD_R3D_FLOATER_DIR_RIGHT</option>
+          <option value="top">MOD_R3D_FLOATER_DIR_TOP</option>
+          <option value="bottom">MOD_R3D_FLOATER_DIR_BOTTOM</option>
+        </field>
+
+        <!-- Size -->
+        <field name="width" type="number" default="560" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_WIDTH" description="MOD_R3D_FLOATER_FIELD_WIDTH_DESC"
+              min="100" max="1920" step="10" />
+        <field name="height" type="number" default="400" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_HEIGHT" description="MOD_R3D_FLOATER_FIELD_HEIGHT_DESC"
+              min="100" max="1080" step="10" />
+
+        <!-- Behavior -->
+        <!-- Delay before auto-open -->
+        <field name="start_delay" type="number" default="0" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_DELAY"
+              description="MOD_R3D_FLOATER_FIELD_DELAY_DESC" />
+
+        <field name="show_close" type="radio" default="1"
+              label="MOD_R3D_FLOATER_FIELD_CLOSE" description="MOD_R3D_FLOATER_FIELD_CLOSE_DESC">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+
+        <field name="autoclose" type="number" default="0" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_AUTOCLOSE"
+              description="MOD_R3D_FLOATER_FIELD_AUTOCLOSE_DESC" />
+
+        <!-- Frequency -->
+        <field name="frequency" type="list" default="once"
+              label="MOD_R3D_FLOATER_FIELD_FREQ" description="MOD_R3D_FLOATER_FIELD_FREQ_DESC">
+          <option value="once">MOD_R3D_FLOATER_FREQ_ONCE</option>
+          <option value="every">MOD_R3D_FLOATER_FREQ_EVERY</option>
+          <option value="daily">MOD_R3D_FLOATER_FREQ_DAY</option>
+          <option value="weekly">MOD_R3D_FLOATER_FREQ_WEEK</option>
+          <option value="monthly">MOD_R3D_FLOATER_FREQ_MONTH</option>
+        </field>
+
+        <field name="cookie_prefix" type="text" default="r3dFloater"
+              label="MOD_R3D_FLOATER_FIELD_KEY" description="MOD_R3D_FLOATER_FIELD_KEY_DESC" />
+
+        <!-- Animation speed -->
+        <field name="speed_in" type="number" default="800" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_SPEED_IN"
+              description="MOD_R3D_FLOATER_FIELD_SPEED_IN_DESC"
+              min="0" max="10000" step="50" />
+
+        <field name="speed_out" type="number" default="800" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_SPEED_OUT"
+              description="MOD_R3D_FLOATER_FIELD_SPEED_OUT_DESC"
+              min="0" max="10000" step="50" />
+
+        <!-- Rotation & Scale -->
+        <field name="rotate_start" type="number" default="-90" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_ROTATE"
+              description="MOD_R3D_FLOATER_FIELD_ROTATE_DESC"
+              min="-360" max="360" step="5" />
+
+        <field name="scale_start" type="number" default="30" filter="integer"
+              label="MOD_R3D_FLOATER_FIELD_SCALE"
+              description="MOD_R3D_FLOATER_FIELD_SCALE_DESC"
+              min="10" max="200" step="5" />
+
+      </fieldset>
+    </fields>
+  </config>
+
+  <updateservers>
+    <server type="extension" priority="1" name="R3D Floater Update Server">
+      https://r3d.de/joomlaextensions/updates/mod_r3d_floater.xml
+    </server>
+  </updateservers>
+</extension>
