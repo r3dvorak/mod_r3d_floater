@@ -1,0 +1,20 @@
+{
+  "Language": "en",
+  "CategoryId": "4",
+  "ForcedFileId": "4",
+  "LicenseId": "1",
+  "Title": "mod_r3d_floater Module 5.5.2",
+  "Alias": "",
+  "Description": "Floating panel module for Joomla\r\n\r\nVersion: 5.5.2",
+  "Features": "- Module artifact for Joomla\n- Download and metadata managed centrally\n- Ready for automated update delivery",
+  "Changelog": "Version 5.5.2\r\n- Package artifact updated\r\n- Download and update-server metadata refreshed\r\n\r\nFull changelog: https://github.com/r3dvorak/mod_r3d_floater/blob/main/README.md",
+  "Notes": "Automatically published via the R3D build/release routine.\r\nCompatible with Joomla 4.4 through 6+.\r\nFor questions: dev@r3d.de",
+  "ArtifactPath": "D:\\1DEV\\mods\\mod_r3d_floater\\04_dist\\mod_r3d_floater-5.5.2.zip",
+  "ArtifactName": "mod_r3d_floater-5.5.2.zip",
+  "Version": "5.5.2",
+  "PublicFileUrl": "https://extensions.r3d.de/phocadownload/mod_r3d_floater-5.5.2.zip",
+  "ProjectName": "mod_r3d_floater",
+  "AuthorName": "Richard Dvorak",
+  "AuthorEmail": "dev@r3d.de",
+  "AuthorUrl": "https://www.r3d.de"
+}
