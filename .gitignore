@@ -1,9 +1,14 @@
 # Ignore everything by default
 /*
 
-# Allow src folder
-!/src/
-!/src/**
+# Allow standardized DEV structure
+!/01_src/
+!/01_src/**
+!/02_build/
+!/03_docs/
+!/04_dist/
+!/05_updates/
+!/project.json
 
 # Allow root project files
 !README.md
@@ -27,8 +32,6 @@ node_modules/
 package-lock.json
 yarn.lock
 
-# Build + dist
-/build/
-/dist/
+# temp
 /tmp/
 /temp/
