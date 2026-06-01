@@ -35,3 +35,5 @@ yarn.lock
 # temp
 /tmp/
 /temp/
+
+/02_build/
