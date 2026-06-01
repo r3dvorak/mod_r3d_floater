@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" client="site" method="upgrade">
   <name>MOD_R3D_FLOATER</name>
-  <version>5.5.1</version>
+  <version>5.5.2</version>
   <creationDate>2025-09-02</creationDate>
   <author>Richard Dvorak, r3d.de</author>
   <authorUrl>https://r3d.de</authorUrl>
@@ -142,7 +142,9 @@
 
   <updateservers>
     <server type="extension" priority="1" name="R3D Floater Update Server">
-      https://www.r3d.de/web/joomlaextensions/updates/mod_r3d_floater.xml
+      https://extensions.r3d.de/web/joomlaextensions/updates/mod_r3d_floater.xml
     </server>
   </updateservers>
 </extension>
+
+
